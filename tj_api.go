@@ -296,6 +296,7 @@ func makeRequest(url string, method string) (io.ReadCloser, error) {
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		defer resp.Body.Close();
 		return nil, HTTPError{
 			Url:        url,
 			StatusCode: resp.StatusCode,
