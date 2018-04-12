@@ -1,0 +1,25 @@
+[Unit]
+Description=Dejavu ads controller
+After=network.target
+
+[Service]
+Type=simple
+User=djv_ads
+Group=djv_ads
+LimitNOFILE=1024
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=djv_ads
+Environment=TJ_API_KEY=$TJ_API_KEY
+Environment=TJ_USERNAME=$TJ_USERNAME
+Environment=TJ_PASSWORD=$TJ_PASSWORD
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+
+WorkingDirectory=/home/djv_ads
+ExecStart=/usr/local/bin/djv_ads_controller -state_path=/opt/djv_ads/state -updates_path=/opt/djv_ads/updates -templates_dir=/opt/djv_ads/templates --logtostderr
+
+[Install]
+WantedBy=multi-user.target
