@@ -76,7 +76,7 @@ func controllerCron() {
 
 			if true || state.DebugEnabled == ENABLED {
 				opts = append(opts, djv_ads.WithCampaignWhitelist(
-					"1002170291", "1002170211", "1002170181", "1002170171"))
+					"1002205321", "1002203421", "1002203381", "1002203371"))
 			}
 
 			controller, err := djv_ads.NewAdsController(opts...)
