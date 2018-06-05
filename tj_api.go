@@ -127,6 +127,7 @@ func GetAccountState(
 			glog.Infof("Got bids for campaign %s", campaignId)
 			if err == nil {
 				for _, bidJson := range bidRespJson.BidMap {
+					glog.Infof("%v: %v && %v", bidJson.BidId, bidJson.IsActive, bidJson.IsPaused)
 					bidIsActive := bidJson.IsActive && bidJson.IsPaused == 0
 					bidAmount, err := strconv.ParseFloat(bidJson.BidAmount, 64)
 					if err != nil {
@@ -156,6 +157,8 @@ func GetAccountState(
 
 					bids[bidJson.BidId] = bid
 				}
+			} else {
+				glog.Errorf("Error getting bids for campaign %v: %v", campaignId, err)
 			}
 
 			glog.Infof("Done processing campaign %s", campaignId)
