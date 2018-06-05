@@ -74,10 +74,11 @@ func controllerCron() {
 				djv_ads.UndercutBy(state.Undercut),
 			}
 
-			if true || state.DebugEnabled == ENABLED {
+			if state.DebugEnabled == ENABLED {
+				glog.Infof("Using static campaign list")
 				opts = append(opts, djv_ads.WithCampaignWhitelist(
-                                        "1002279041", "1002279031", "1002279011", "1002279001",
-                                        "1002278921", "1002278911"))
+					"1002279041", "1002279031", "1002279011", "1002279001",
+					"1002278921", "1002278911"))
 			}
 
 			controller, err := djv_ads.NewAdsController(opts...)

@@ -71,7 +71,18 @@ func (controller *AdsController) RunOnce() []*BidUpdate {
 		return nil
 	}
 
-	accountState, err := GetAccountState(controller.campaignWhitelist, session, rateLimiter)
+	var campaignIds []string
+	if (len(controller.campaignWhitelist) > 0) {
+		campaignIds = controller.campaignWhitelist
+	} else {
+		campaignIds, err = session.GetActiveCampaignIds()
+		if err != nil {
+			glog.Errorf("Error getting active campaign ID list: %v", err)
+			return nil
+		}
+	}
+
+	accountState, err := GetAccountState(campaignIds, session, rateLimiter)
 	if err != nil {
 		glog.Errorf("Error getting account state: %v", err)
 		return nil
